@@ -32,9 +32,17 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
 
-- task: PublishBuildArtifacts@1
+- task: PublishPipelineArtifact@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'FilePath'
-    TargetPath: '$(Build.BinariesDirectory)'
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    publishLocation: 'filepath'
+    fileSharePath: '$(System.DefaultWorkingDirectory)'
+    parallel: true
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Free Trial(6b4b291a-9e55-4c96-9291-970e014ecc53)'
+    appType: 'webApp'
+    appName: 'azure-repo-react-app'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
