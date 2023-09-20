@@ -1,16 +1,16 @@
-name: Build and deploy Node.jaes tsefo Azure Web App - react-app-service
+name: Build and deploy Node.js to Azure Web App - react-app-service
 
 on:
   push:
     branches:
       - react-app
   workflow_dispatch:
-
 jobs:
+
   deploy:
       strategy:
         matrix:
-          os: [ubuntu-latest, windows-latest]
+          os: [ubuntu-latest]
       runs-on: ${{ matrix.os }}
       steps:
             - name: Check Azure CLI version
@@ -18,4 +18,3 @@ jobs:
             - uses: Azure/login@v1
               with:
                 creds: '{"clientId":"${{ secrets.AZURE_CLI }}","clientSecret":"${{ secrets.AZURE_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
-
