@@ -8,7 +8,10 @@ on:
 
 jobs:
   deploy:
-      runs-on: window-latest
+      strategy:
+        matrix:
+          os: [ubuntu-latest, windows-latest]
+      runs-on: ${{ matrix.os }}
       steps:
             - name: Check Azure CLI version
               run: az --version
