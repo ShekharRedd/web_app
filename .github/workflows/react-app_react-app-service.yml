@@ -44,7 +44,9 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CLIENT_SECRET }}
+          creds: ${{ secrets.AZURE_CLI }}
+          secret: ${{ secrets.AZURE_SECRET }}
+          tenant: ${{ secrets.TENANT_ID }}
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
