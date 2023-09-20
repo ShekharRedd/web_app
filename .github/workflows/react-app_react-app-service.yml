@@ -4,55 +4,51 @@ on:
   push:
     branches:
       - react-app
-  workflow_dispatch:
+env:
+    AZURE_WEBAPP_PACKAGE_PATH: '.'  
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Node.js version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-          
+          cache: 'npm'
       - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present
           npm run test --if-present
-
-      - name: Zip build artifacts
-        run: zip -r build-artifacts.zip build
-
+          
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: build-artifacts.zip
+          path: .
 
   deploy:
       strategy:
         matrix:
           os: [ubuntu-latest]
       runs-on: ${{ matrix.os }}
-      needs: build      
+      needs: build
+      environment:
+        name: 'production'
+        url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}      
       steps:
             - name: Check Azure CLI version
               run: az --version
             - uses: Azure/login@v1
               with:
                 creds: '{"clientId":"${{ secrets.AZURE_CLI }}","clientSecret":"${{ secrets.AZURE_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
-
             - name: Download artifact from build job
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v3
               with:
                 name: build-artifacts
-              timeout-minutes: 3  # Increase the timeout value as needed
-      
-            - name: Unzip the build artifacts
-              run: unzip build-artifacts.zip -d build-artifacts
-      
+                
             - name: Deploy to Azure Web App
               id: deploy-to-webapp
               uses: azure/webapps-deploy@v2
@@ -60,4 +56,4 @@ jobs:
                 app-name: 'react-app-service'
                 slot-name: 'production'
                 publish-profile: ${{ secrets.RAMSITA }}
-                package: ./build-artifacts
+                package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
