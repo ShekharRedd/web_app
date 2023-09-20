@@ -8,8 +8,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: self-hosted
+    # Add environment if needed
+    environment:
+      name: 'self-hosted'
     steps:
       - uses: actions/checkout@v2
 
@@ -35,11 +37,10 @@ jobs:
 
   deploy:
     runs-on: self-hosted
-    needs: build
+    # Add environment if needed
     environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+      name: 'self-hosted'
+    needs: build
     steps:
       - name: Azure Login
         uses: azure/login@v1
@@ -52,6 +53,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifacts
+        timeout-minutes: 10  # Increase the timeout value as needed
 
       - name: Unzip the build artifacts
         run: unzip build-artifacts.zip -d build-artifacts
