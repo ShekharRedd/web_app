@@ -127,11 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-S:\vscode\react_app\CONTRIBUTING.md
-S:\vscode\react_app\LICENSE.md
-S:\vscode\react_app\CHANGELOG.md
 .github\*
-myenv/*
+myenv/
 .LI*
 .CHANGELOG*
-.RE*
+.README.md
