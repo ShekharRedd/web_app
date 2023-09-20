@@ -46,7 +46,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_SECRET }}
           client-id: ${{ secrets.AZURE_CLI }}
-          tenant: ${{ secrets.TENANT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
