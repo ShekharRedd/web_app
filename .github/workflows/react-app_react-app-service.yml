@@ -1,4 +1,4 @@
-name: Build and deploy   Node.js app to Azure Web App - react-app-service
+name: Build and deploy Node.js app to Azure Web App - react-app-service
 
 on:
   push:
@@ -41,6 +41,11 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CLIENT_SECRET }}
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
@@ -49,7 +54,7 @@ jobs:
       - name: Unzip the build artifacts
         run: unzip build-artifacts.zip -d build-artifacts
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
