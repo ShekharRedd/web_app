@@ -8,17 +8,12 @@ on:
 
 jobs:
   deploy:
-      strategy:
-        matrix:
-          os: [windows-latest,ubuntu-latest]
-      runs-on: ${{ matrix.os }}
+      runs-on: window-latest
       steps:
             - name: Check Azure CLI version
               run: az --version
-            - name: Azure Login
+            - name: 'Login via Azure CLI'
               uses: azure/login@v1
               with:
-                creds: ${{ secrets.AZURE_SECRET }}
-                client-id: ${{ secrets.AZURE_CLI }}
-                tenant-id: ${{ secrets.TENANT_ID }}              
+                creds: '{"clientId":"${{ secrets.AZURE_CLI }}","clientSecret":"${{ secrets.AZURE_SECRET }}","tenantId":"${{ secrets.TENANT_ID }}"}'              
 
