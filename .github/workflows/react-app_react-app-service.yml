@@ -8,10 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
-    # Add environment if needed
-    environment:
-      name: 'self-hosted'
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
