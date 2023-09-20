@@ -34,7 +34,7 @@ jobs:
           path: build-artifacts.zip
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build
     environment:
       name: 'production'
