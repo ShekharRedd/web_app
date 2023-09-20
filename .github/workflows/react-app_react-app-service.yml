@@ -1,4 +1,4 @@
-name: Build and deploy Node.jaes to Azure Web App - react-app-service
+name: Build and deploy Node.jaes tsefo Azure Web App - react-app-service
 
 on:
   push:
