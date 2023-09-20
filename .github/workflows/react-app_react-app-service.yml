@@ -60,5 +60,5 @@ jobs:
         with:
           app-name: 'react-app-service'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_3faea4a6b9b748019fd7ddcb8ba69a4f }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile }}
           package: ./build-artifacts
