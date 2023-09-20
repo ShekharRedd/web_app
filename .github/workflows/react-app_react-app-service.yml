@@ -15,8 +15,7 @@ jobs:
       steps:
             - name: Check Azure CLI version
               run: az --version
-            - name: 'Login via Azure CLI'
-              uses: azure/login@v1
+            - uses: Azure/login@v1
               with:
-                creds: '{"clientId":"${{ secrets.AZURE_CLI }}","clientSecret":"${{ secrets.AZURE_SECRET }}","tenantId":"${{ secrets.TENANT_ID }}"}'              
+                creds: '{"clientId":"${{ secrets.AZURE_CLI }}","clientSecret":"${{ secrets.AZURE_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
 
