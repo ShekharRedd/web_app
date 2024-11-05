@@ -6,7 +6,7 @@ name: Build and deploy Node.js app to Azure Web App - shekhing
 on:
   push:
     branches:
-      - main
+      - ShekharRedd-patch-2
   workflow_dispatch:
 
 jobs:
